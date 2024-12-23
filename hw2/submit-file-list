@@ -1,0 +1,6 @@
+q1/fsa1
+q1/fsa2
+q1/fsa3
+q1/fsa4
+fsa_acceptor.sh
+reg_to_fsa.sh

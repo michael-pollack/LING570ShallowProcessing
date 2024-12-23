@@ -1,0 +1,22 @@
+LING 570 HW6 Write-Up
+Michael Pollack
+
+hoooooooo boy, what a week. What a homework. Let's get to it:
+
+##### CHECK_HMM IMPLEMENTATION #####
+In order to store the HMM in my Check_HMM file, I created a class called HMMChecker that contains three dictionaries to hold the states of init, transitions, and emissions. The dictionary for init (self.init_states), is a simple string to float dictionary that matches a state with its probability. For transitions and emissions (self.trans_states and self.emiss_state, respectively) I used a python defaultdict within another python defauldict. For self.trans_states, initial states are mapped to transitions states, which then have a float representing their probability. For self.emiss_state, a state is mapped to a symbol, which is then mapped to a probability. 
+
+This was the same method that I used to store information about the probabilities in my create_2gram_hmm.sh and create_3gram_hmm.sh implementations. This seems to me to be the most effective way to map information like this. 
+
+Also! You may note that in my check_hmm file I do my comparison by rounding to the nearest third decimal place. I chose this because the probabilities in the example had three decimal places. I figured that a difference by something beyond that amount would be negligable. 
+
+##### NOTES ABOUT MY FINAL RESULTS #####
+You may quickly notice that my 2g_hmm.warning file is error free, while my 3g_hmm warning files are positively abound with warnings. Something interesting you might notice upon further inspection, however, is that those warnings are very consistent. For example, if you look through all of my trans_prob_sum warnings in my 3g_hmm_0.1_0.1_0.8.warning file, you may notice that all of the sums that are incorrect are very close to 0.2. Testing with several different lambda values, these sums are all consistently very close to the same number (I beleive that their minute differences are the result of python's finicky float class). In testing this, I checked the individual values that I had found for p1, p2, and p3 and found that (when they existed) they consistently added up to 1. This error, therefore, I believe is the result of my smoothing with the input lambdas. To be quite honest, it seems to me that this would be expected. In many cases, p2 and p3 either equal 0 or are very close thereto, while p1 consistently has a non-zero probability. Therefore, it seems logical that adding those probabilities together when the bigrams and trigrams do not exist would yield a result that adds up to less than 1. I am unsure how to accomodate for these scenarios, and could not find an answer in any of the given documentation. This is something I will likely seek guidance on in office hours. 
+
+I also have errors in the emiss_probs section of the homework. This, I believe, was do to my implementation of the unk_probs section. To be quite honest, I am still very unsure as to how this is meant to be implemented. My implementation followed my own interpretation of the what was described in the assignment and the slides. Looking at the examples is very confusing, however, as in those examples one can see <unk> as a symbol with its own probability. I did not choose to implement this method, as the assignment mentioned that the homeworks were not a golden example, but I still found this discrepancy very confusing. With the implementation that I made, I do not see how it is possible for the probabilities to sum to 1, given that we are taking something that sums to 1 and deliberately multiplying it by something that does not. This is also something I plan to seek guidance on. 
+
+Lastly, There are also several instances where my probailities sum to 0. This is because I implemented it so that all possible emmissions are represented, as Fei mentioned in class. Because some of these emmissions are never observed in the training text, it is not possible to assign them a probability greater than 0. 
+
+In summary, please have mercy on my soul. I worked very hard on this, and it seems that I am quite close. My only errors seem to be misunderstanding related to what I percieve as discrepancies in the text. 
+
+Alright, I'm going to bed now. Once more, please have mercy on my poor weary soul. 
